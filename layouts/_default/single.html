@@ -24,7 +24,7 @@
       </div>
       {{- end }}
       {{- if .Description }}
-      <div class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+      <div class="text-lg leading-relaxed text-gray-700 dark:text-gray-400">
         {{ .Description }}
       </div>
       {{- end }}
@@ -51,17 +51,6 @@
     {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
     {{- partial "share_icons.html" . -}}
     {{- end }}
-    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
-    <div class="mt-8 space-y-4">
-      <span class="text-2xl font-bold">Tags:</span>
-      <div class="flex justify-center gap-2">
-        {{- range ($.GetTerms $tags) }}
-        <a href="{{ .Permalink }}" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-          {{ .LinkTitle }}
-        </a>
-      </div>
-      {{- end }}
-    </div>
     {{- if (.Param "ShowPostNavLinks") }}
     {{- partial "post_nav_links.html" . }}
     {{- end }}
@@ -71,6 +60,18 @@
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
   {{- end }}
+
+  {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+  <div class="mt-8 space-y-4">
+    <span class="text-2xl font-bold">Tags:</span>
+    <div class="flex justify-center gap-2">
+      {{- range ($.GetTerms $tags) }}
+      <a href="{{ .Permalink }}" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+        {{ .LinkTitle }}
+      </a>
+    </div>
+    {{- end }}
+  </div>
 </article>
 
 {{- end }}{{/* end main */}}
