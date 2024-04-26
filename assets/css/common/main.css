@@ -38,6 +38,11 @@
     width: 26px;
 }
 
+.social-icons svg {
+    height: 26px;
+    width: 26px;
+}
+
 code {
     direction: ltr;
 }
