@@ -26,9 +26,22 @@
 {{- end }}
 
 {{- if (not site.Params.disableScrollToTop) }}
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g"
+   class="bg-[#6366F1] hover:bg-[#4F46E5] text-white rounded-full p-2 cursor-pointer transition-colors dark:bg-[#818CF8] dark:hover:bg-[#6366F1]">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-5 w-5"
+    >
+        <path d="m5 12 7-7 7 7"></path>
+        <path d="M12 19V5"></path>
     </svg>
 </a>
 {{- end }}
