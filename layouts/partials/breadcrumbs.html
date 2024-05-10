@@ -1,19 +1,48 @@
 {{- if (.Param "ShowBreadCrumbs") -}}
-<div class="breadcrumbs">
-    {{- $url := replace .Parent.Permalink (printf "%s" site.Home.Permalink) "" }}
-    {{- $lang_url := strings.TrimPrefix (printf "%s/" .Lang) $url -}}
+<nav aria-label="breadcrumb">
+    <ol class="flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5">
+        {{- $url := replace .Parent.Permalink (printf "%s" site.Home.Permalink) "" }}
+        {{- $lang_url := strings.TrimPrefix (printf "%s/" .Lang) $url -}}
 
-    <a href="{{ "" | absLangURL }}">{{ i18n "home" | default "Home" }}</a>
-    {{- $scratch := newScratch }}
-    {{- range $index, $element := split $lang_url "/" }}
+        <a href="{{ "" | absLangURL }}">{{ i18n "home" | default "Home" }}</a>
+        {{- $scratch := newScratch }}
+        {{- range $index, $element := split $lang_url "/" }}
 
-    {{- $scratch.Add "path" (printf "%s/" $element )}}
-    {{- $bc_pg := site.GetPage ($scratch.Get "path") -}}
+        {{- $scratch.Add "path" (printf "%s/" $element )}}
+        {{- $bc_pg := site.GetPage ($scratch.Get "path") -}}
 
-    {{- if (and ($bc_pg) (gt (len . ) 0))}}
-    {{- print "&nbsp;»&nbsp;" | safeHTML -}}<a href="{{ $bc_pg.Permalink }}">{{ $bc_pg.Name }}</a>
-    {{- end }}
+        {{- if (and ($bc_pg) (gt (len . ) 0))}}
+        {{- print `<li aria-hidden="true" class="[&amp;>svg]:size-3.5" role="presentation">
+        <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-chevron-right"
+        >
+            <path d="m9 18 6-6-6-6"></path>
+        </svg>
+    </li>` | safeHTML -}}
+        <li class="inline-flex items-center gap-1.5">
+            <a
+                    class="transition-colors hover:text-foreground"
+                    href="{{ $bc_pg.Permalink }}"
+                    __child="
+                Home
+    "
+            >
+                {{ $bc_pg.Name }}
+            </a>
+        </li>
+        {{- end }}
 
-    {{- end -}}
-</div>
+        {{- end -}}
+
+    </ol>
+</nav>
 {{- end -}}

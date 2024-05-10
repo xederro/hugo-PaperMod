@@ -1,27 +1,35 @@
 {{- define "main" }}
+<div class="max-w-3xl mx-auto py-8">
+    {{- if .Title }}
+    <header class="page-header">
+        <h1 class="text-4xl font-extrabold text-[#6366F1] dark:text-[#818CF8] mb-8">{{ .Title }}</h1>
+        {{- if .Description }}
+        <div class="post-description">
+            {{ .Description }}
+        </div>
+        {{- end }}
+    </header>
+    {{- end }}
 
-{{- if .Title }}
-<header class="page-header">
-    <h1>{{ .Title }}</h1>
-    {{- if .Description }}
-    <div class="post-description">
-        {{ .Description }}
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {{- $type := .Type }}
+        {{- range $key, $value := .Data.Terms.Alphabetical }}
+        {{- $name := .Name }}
+        {{- $count := .Count }}
+        {{- with site.GetPage (printf "/%s/%s" $type $name) }}
+        <div class="bg-white dark:bg-gray-950 rounded-lg shadow-md">
+            <a href="{{ .Permalink }}">
+                <div class="p-4">
+                    <div class="text-3xl font-bold text-[#6366F1] dark:text-[#818CF8] mb-2">
+                        {{ .Name }}
+                    </div>
+                    <div class="text-gray-500 dark:text-gray-400">{{ $count }}</div>
+                </div>
+            </a>
+        </div>
+        {{- end }}
+        {{- end }}
     </div>
-    {{- end }}
-</header>
-{{- end }}
-
-<ul class="terms-tags">
-    {{- $type := .Type }}
-    {{- range $key, $value := .Data.Terms.Alphabetical }}
-    {{- $name := .Name }}
-    {{- $count := .Count }}
-    {{- with site.GetPage (printf "/%s/%s" $type $name) }}
-    <li>
-        <a href="{{ .Permalink }}">{{ .Name }} <sup><strong><sup>{{ $count }}</sup></strong></sup> </a>
-    </li>
-    {{- end }}
-    {{- end }}
-</ul>
+</div>
 
 {{- end }}{{/* end main */ -}}
